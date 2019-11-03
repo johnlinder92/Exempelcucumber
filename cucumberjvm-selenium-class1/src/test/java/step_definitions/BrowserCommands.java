@@ -27,7 +27,7 @@ public class BrowserCommands{
         wait.until(ExpectedConditions.elementToBeClickable(By.linkText("ABOUT")));
         driver.findElement(By.linkText("ABOUT")).click();
     }
-    @Then("^I print the html$")
+    @Then("^I print the html title$")
     public void i_print_the_html() throws Throwable {
        System.out.println("Browser title-"+driver.getTitle());
     }
