@@ -23,5 +23,7 @@ public class Addition {
 	public void i_display_the_sum() throws Throwable {
 	    // Write code here that turns the phrase above into concrete actions
 	    System.out.println("Sum is "+sum);
+
+	    // hmm
 	}
 }
