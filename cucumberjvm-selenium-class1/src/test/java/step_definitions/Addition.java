@@ -5,9 +5,9 @@ import cucumber.api.java.en.When;
 public class Addition {
 	int a, b,sum;
 	@Given("^I have variable a$")
-	public void i_have_variable_a() throws Throwable {
-	    // Write code here that turns the phrase above into concrete actions
-		a = 3;
+		public void i_have_variable_a() throws Throwable {
+			// Write code here that turns the phrase above into concrete actions
+			a = 3;
 	}
 	@Given("^I have variable b$")
 	public void i_have_variable_b() throws Throwable {
@@ -23,6 +23,7 @@ public class Addition {
 	public void i_display_the_sum() throws Throwable {
 	    // Write code here that turns the phrase above into concrete actions
 	    System.out.println("Sum is "+sum);
+
 
 //test
 	}
