@@ -11,4 +11,4 @@ Feature: Configurable password complexity
     Given the user has clicked on the email link to create new password
     And the user has typed in a password of medium complexity
     When the user clicks submit
-    Then I display the message "not enought password complexity"
+    Then I display the message not enought password complexity
