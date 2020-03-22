@@ -14,3 +14,4 @@ Feature: Configurable password complexity
     And a password with medium security has been entered in both fields
     When the user clicks submit
     Then I display the message not enought password complexity
+    And test cleanup

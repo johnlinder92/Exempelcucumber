@@ -26,7 +26,7 @@ public class ConfigurablePasswordComplexity {
     {
         driver = Hooks.driver;
     }
-
+public JavascriptExecutor js;
     private Map<String, Object> vars;
 
    /* @Given("^I am logged in as a company admin$")
@@ -189,6 +189,7 @@ driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
     @Given("new user has been created")
     public void newUserHasBeenCreated() {
+        driver.manage().deleteAllCookies();
         driver.get("https://testsitename.atronic.se");
         driver.manage().window().maximize();
         driver.findElement(By.id("username")).click();
@@ -250,7 +251,7 @@ driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver.findElement(By.linkText("Användare")).click();
         Select roles = new Select(driver.findElement(By.id("roles")));
         roles.selectByValue("1");
-
+        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
         Select customer = new Select(driver.findElement(By.id("filterCustomer")));
         customer.selectByValue("3");
         driver.findElement(By.xpath("//input[@type='search']")).sendKeys("AAAA");
@@ -258,7 +259,11 @@ driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         WebDriverWait wait2=new WebDriverWait(driver, 20);
        boolean element2 = wait2.until(ExpectedConditions.invisibilityOfElementLocated(By.linkText("87609")));
 
+        boolean element3 = wait2.until(ExpectedConditions.invisibilityOfElementLocated(By.linkText("3054")));
 
+        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+        boolean element4 = wait2.until(ExpectedConditions.invisibilityOfElementLocated(By.linkText("890")));
+        driver.findElement(By.xpath("//div[@id='wid-id-3']/div/div[2]/div[2]")).click();
         driver.findElement(By.linkText("Skicka inbjudan")).click();
         WebDriverWait wait=new WebDriverWait(driver, 20);
         WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("roles")));
@@ -269,30 +274,11 @@ driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
     @And("password link has been clicked on")
     public void passwordLinkHasBeenClickedOn() {
-        /*driver.get("https://gmail.com");
-        driver.manage().window().maximize();
-        driver.findElement(By.id("identifierId")).sendKeys("microdebtest@gmail.com");
-        driver.findElement(By.id("identifierNext")).click();
-        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 
-        WebDriverWait wait=new WebDriverWait(driver, 20);
 
-         driver.findElement(By.xpath("//input[@class='whsOnd zHQkBf']")).sendKeys("Brazil1234");
-        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-
-        WebDriverWait wait2=new WebDriverWait(driver, 20);
-        driver.findElement(By.xpath("//span[@class='RveJvd snByac']")).click();
-        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-
-        WebDriverWait wait3=new WebDriverWait(driver, 20);
-        driver.findElement(By.cssSelector(".qs41qe > .ZFr60d")).click();
-        driver.findElement(By.cssSelector(".bqe:nth-child(1)")).click();
-        vars.put("window_handles", driver.getWindowHandles());
-        driver.findElement(By.linkText("Verifiera min e-postadress")).click();
-*/
         driver.manage().window().maximize();
 
-        String url = "https://accounts.google.com/signin";
+        String url = "https://gmail.com";
 
         driver.get(url);
 
@@ -303,12 +289,20 @@ driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         WebDriverWait wait=new WebDriverWait(driver, 20);
 
         driver.findElement(By.xpath("//span[@class='RveJvd snByac']")).click();
-
+        WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("password")));
         driver.manage().timeouts().implicitlyWait(50, TimeUnit.SECONDS);
 
-        driver.findElement(By.xpath("//input[@class='whsOnd zHQkBf']")).sendKeys("asassassa");
+        driver.findElement(By.xpath("//input[@class='whsOnd zHQkBf']")).sendKeys("Brazil1234");
 
-        driver.findElement(By.xpath("//span[@class='RveJvd snByac']")).click();
+
+        driver.manage().window().setSize(new Dimension(1382, 744));
+        driver.findElement(By.id(":2v")).click();
+        driver.findElement(By.cssSelector("#\\3A ar > .ajT")).click();
+        js.executeScript("window.scrollTo(0,0)");
+        vars.put("window_handles", driver.getWindowHandles());
+        driver.findElement(By.linkText("Verifiera min e-postadress")).click();
+       driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        driver.switchTo().window(vars.get("win9606").toString());
 
     }
 
@@ -322,5 +316,42 @@ driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
     @Then("I display the message not enought password complexity")
     public void iDisplayTheMessageNotEnoughtPasswordComplexity() {
+
+
+
+
+
+    }
+
+    @And("test cleanup")
+    public void testCleanup() {
+        // Cleanup!
+        driver.manage().deleteAllCookies();
+        driver.get("https://testsitename.atronic.se");
+        driver.manage().window().maximize();
+        driver.findElement(By.id("username")).click();
+        driver.findElement(By.id("username")).sendKeys("Niklas");
+        driver.findElement(By.id("password")).click();
+        driver.findElement(By.id("password")).sendKeys("demo");
+        driver.findElement(By.id("submit")).click();
+
+
+        driver.findElement(By.linkText("Användare")).click();
+        Select roles = new Select(driver.findElement(By.id("roles")));
+        roles.selectByValue("1");
+        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+        Select customer = new Select(driver.findElement(By.id("filterCustomer")));
+        customer.selectByValue("3");
+        driver.findElement(By.xpath("//input[@type='search']")).sendKeys("AAAA");
+        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+        WebDriverWait wait2=new WebDriverWait(driver, 20);
+        boolean element2 = wait2.until(ExpectedConditions.invisibilityOfElementLocated(By.linkText("87609")));
+        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+
+        driver.findElement(By.className("fa fa-trash-o fa-lg deleteItem")).click();
+        WebDriverWait wait=new WebDriverWait(driver, 20);
+        WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("roles")));
+        boolean status = element.isDisplayed();
+
     }
 }
