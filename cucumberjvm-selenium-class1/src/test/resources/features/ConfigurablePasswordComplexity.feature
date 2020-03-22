@@ -8,7 +8,9 @@ Feature: Configurable password complexity
     When I click save
     Then I display the success message Company successfully saved
   Scenario: Attempting to create employee password with medium complexity when the settings is set to high
-    Given the user has clicked on the email link to create new password
-    And the user has typed in a password of medium complexity
+    Given new user has been created
+    And password link has been sent
+    And password link has been clicked on
+    And a password with medium security has been entered in both fields
     When the user clicks submit
     Then I display the message not enought password complexity

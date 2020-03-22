@@ -70,7 +70,7 @@ public class ConfigurablePasswordComplexity {
        assertEquals("Företag sparat\n×", successMessage );
     }
 */
-    @Given("the user has clicked on the email link to create new password")
+/*    @Given("the user has clicked on the email link to create new password")
     public void theUserHasClickedOnTheEmailLinkToCreateNewPassword() {
 
         driver.get("https://testsitename.atronic.se/account/login?ReturnUrl=%2F");
@@ -87,19 +87,19 @@ public class ConfigurablePasswordComplexity {
 
         driver.findElement(By.linkText("Lägg till ny")).click();
         driver.findElement(By.id("Username")).click();
-        driver.findElement(By.id("Username")).sendKeys("test");
+        driver.findElement(By.id("Username")).sendKeys("AAAA");
 
 
         Select roles = new Select(driver.findElement(By.id("Roles_UserRoles")));
         roles.selectByValue("1");
 
         Select customer = new Select(driver.findElement(By.id("CustomerId")));
-        customer.selectByValue("1");
+        customer.selectByValue("3");
 
 
-        driver.findElement(By.id("FirstName")).sendKeys("thetester");
+        driver.findElement(By.id("FirstName")).sendKeys("AAAA");
         driver.findElement(By.id("LastName")).click();
-        driver.findElement(By.id("LastName")).sendKeys("thetester");
+        driver.findElement(By.id("LastName")).sendKeys("AAAA");
         driver.findElement(By.id("RequiredEmployeeNumber")).click();
         Random rand = new Random();
 
@@ -112,15 +112,24 @@ public class ConfigurablePasswordComplexity {
 
         driver.findElement(By.id("Email")).click();
         driver.findElement(By.id("Email")).sendKeys("microdebtest@gmail.com");
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver.findElement(By.cssSelector(".btn-primary")).submit();
+        driver.manage().timeouts().setScriptTimeout(5,TimeUnit.SECONDS);
+        */
+/*driver.manage().deleteAllCookies();
+driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        driver.findElement(By.id("username")).click();
+        driver.findElement(By.id("username")).sendKeys("Niklas");
+        driver.findElement(By.id("password")).click();
+        driver.findElement(By.id("password")).sendKeys("demo");
+        driver.findElement(By.id("submit")).click();
 
 
-
-        driver.findElement(By.cssSelector("#userindextable_filter > label > input")).sendKeys("thetester");
-
-        driver.findElement(By.linkText("Skicka inbjudan")).click();
+        driver.findElement(By.linkText("Användare")).click();
 
 
+        driver.findElement(By.xpath("//input[@type='search']")).sendKeys("AAAA");
+        driver.findElement(By.linkText("Verifiera min e-postadress")).click();*/
        /* driver.get("https://gmail.com");
 
         driver.findElement(By.id("identifierId")).sendKeys("microdebtest@gmail.com");
@@ -174,4 +183,144 @@ public class ConfigurablePasswordComplexity {
     }
 }
 */
-    }}
+
+
+
+
+    @Given("new user has been created")
+    public void newUserHasBeenCreated() {
+        driver.get("https://testsitename.atronic.se");
+        driver.manage().window().maximize();
+        driver.findElement(By.id("username")).click();
+        driver.findElement(By.id("username")).sendKeys("Niklas");
+        driver.findElement(By.id("password")).click();
+        driver.findElement(By.id("password")).sendKeys("demo");
+        driver.findElement(By.id("submit")).click();
+
+
+        driver.findElement(By.linkText("Användare")).click();
+
+
+        driver.findElement(By.linkText("Lägg till ny")).click();
+        driver.findElement(By.id("Username")).click();
+        driver.findElement(By.id("Username")).sendKeys("AAAA");
+
+
+        Select roles = new Select(driver.findElement(By.id("Roles_UserRoles")));
+        roles.selectByValue("1");
+
+        Select customer = new Select(driver.findElement(By.id("CustomerId")));
+        customer.selectByValue("3");
+
+
+        driver.findElement(By.id("FirstName")).sendKeys("AAAA");
+        driver.findElement(By.id("LastName")).click();
+        driver.findElement(By.id("LastName")).sendKeys("AAAA");
+        driver.findElement(By.id("RequiredEmployeeNumber")).click();
+        Random rand = new Random();
+
+        // Obtain a number between [0 - 10000].
+        int employeenumber = rand.nextInt(100000);
+        String employeestring = String.valueOf(employeenumber);
+
+
+        driver.findElement(By.id("RequiredEmployeeNumber")).sendKeys(employeestring);
+
+        driver.findElement(By.id("Email")).click();
+        driver.findElement(By.id("Email")).sendKeys("microdebtest@gmail.com");
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        driver.findElement(By.cssSelector(".btn-primary")).submit();
+        WebDriverWait wait = new WebDriverWait(driver, 30);
+        WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("roles")));
+        boolean status = element.isDisplayed();
+    }
+
+    @And("password link has been sent")
+    public void passwordLinkHasBeenSent() {
+    driver.manage().deleteAllCookies();
+        driver.get("https://testsitename.atronic.se");
+        driver.manage().window().maximize();
+        driver.findElement(By.id("username")).click();
+        driver.findElement(By.id("username")).sendKeys("Niklas");
+        driver.findElement(By.id("password")).click();
+        driver.findElement(By.id("password")).sendKeys("demo");
+        driver.findElement(By.id("submit")).click();
+
+
+        driver.findElement(By.linkText("Användare")).click();
+        Select roles = new Select(driver.findElement(By.id("roles")));
+        roles.selectByValue("1");
+
+        Select customer = new Select(driver.findElement(By.id("filterCustomer")));
+        customer.selectByValue("3");
+        driver.findElement(By.xpath("//input[@type='search']")).sendKeys("AAAA");
+        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+        WebDriverWait wait2=new WebDriverWait(driver, 20);
+       boolean element2 = wait2.until(ExpectedConditions.invisibilityOfElementLocated(By.linkText("87609")));
+
+
+        driver.findElement(By.linkText("Skicka inbjudan")).click();
+        WebDriverWait wait=new WebDriverWait(driver, 20);
+        WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("roles")));
+        boolean status = element.isDisplayed();
+
+    }
+
+
+    @And("password link has been clicked on")
+    public void passwordLinkHasBeenClickedOn() {
+        /*driver.get("https://gmail.com");
+        driver.manage().window().maximize();
+        driver.findElement(By.id("identifierId")).sendKeys("microdebtest@gmail.com");
+        driver.findElement(By.id("identifierNext")).click();
+        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+
+        WebDriverWait wait=new WebDriverWait(driver, 20);
+
+         driver.findElement(By.xpath("//input[@class='whsOnd zHQkBf']")).sendKeys("Brazil1234");
+        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+
+        WebDriverWait wait2=new WebDriverWait(driver, 20);
+        driver.findElement(By.xpath("//span[@class='RveJvd snByac']")).click();
+        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+
+        WebDriverWait wait3=new WebDriverWait(driver, 20);
+        driver.findElement(By.cssSelector(".qs41qe > .ZFr60d")).click();
+        driver.findElement(By.cssSelector(".bqe:nth-child(1)")).click();
+        vars.put("window_handles", driver.getWindowHandles());
+        driver.findElement(By.linkText("Verifiera min e-postadress")).click();
+*/
+        driver.manage().window().maximize();
+
+        String url = "https://accounts.google.com/signin";
+
+        driver.get(url);
+
+        driver.findElement(By.id("identifierId")).sendKeys("microdebtest@gmail.com");
+
+        //driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+
+        WebDriverWait wait=new WebDriverWait(driver, 20);
+
+        driver.findElement(By.xpath("//span[@class='RveJvd snByac']")).click();
+
+        driver.manage().timeouts().implicitlyWait(50, TimeUnit.SECONDS);
+
+        driver.findElement(By.xpath("//input[@class='whsOnd zHQkBf']")).sendKeys("asassassa");
+
+        driver.findElement(By.xpath("//span[@class='RveJvd snByac']")).click();
+
+    }
+
+    @And("a password with medium security has been entered in both fields")
+    public void aPasswordWithMediumSecurityHasBeenEnteredInBothFields() {
+    }
+
+    @When("the user clicks submit")
+    public void theUserClicksSubmit() {
+    }
+
+    @Then("I display the message not enought password complexity")
+    public void iDisplayTheMessageNotEnoughtPasswordComplexity() {
+    }
+}
